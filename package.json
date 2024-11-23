@@ -3,9 +3,23 @@
 	"version": "0.0.1",
 	"description": "A javascript package to authenticate requests with aws signature.",
 	"scripts": {
-		"build": "tsc",
+        "dev": "vitest",
+		"build": "tsup",
+		"ts-lint": "tsc",
 		"format": "biome format --write .",
-		"ci": "npm run build"
+		"lint": "bun run ts-lint && biome lint --write .",
+		"check-format": "biome check --write .",
+		"check-exports": "attw --pack .",
+		"test": "vitest run",
+		"ci": "bun run ts-lint && bun run check-format && bun run check-exports && bun run test && bun run build"
+	},
+	"main": "dist/index.js",
+	"exports": {
+		"./package.json": "./package.json",
+		".": {
+			"import": "./dist/index.js",
+			"default": "./dist/index.cjs"
+		}
 	},
 	"keywords": ["aws", "aws signature", "aws authenticate"],
 	"license": "MIT",
@@ -22,6 +36,11 @@
 	"type": "module",
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
-		"typescript": "^5.7.2"
+		"typescript": "^5.7.2",
+		"vitest": "^2.1.5"
+	},
+	"dependencies": {
+		"@arethetypeswrong/cli": "^0.17.0",
+		"tsup": "^8.3.5"
 	}
 }
