@@ -1,0 +1,27 @@
+{
+	"name": "aws-request-authentication",
+	"version": "0.0.1",
+	"description": "A javascript package to authenticate requests with aws signature.",
+	"scripts": {
+		"build": "tsc",
+		"format": "biome format --write .",
+		"ci": "npm run build"
+	},
+	"keywords": ["aws", "aws signature", "aws authenticate"],
+	"license": "MIT",
+	"homepage": "https://github.com/SujithJr/aws-request-auth-js",
+	"bugs": {
+		"url": "https://github.com/SujithJr/aws-request-auth-js/issues"
+	},
+	"author": "Sujithkumar Sundaran <hi@iamsujith.in> (https://totaltypescript.com)",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/SujithJr/aws-request-auth-js.git"
+	},
+	"files": ["dist"],
+	"type": "module",
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"typescript": "^5.7.2"
+	}
+}
