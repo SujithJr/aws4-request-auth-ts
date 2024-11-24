@@ -1,46 +1,48 @@
 {
-	"name": "aws-request-authentication",
+	"name": "@sujith/aws4-request-authentication",
 	"version": "0.0.1",
-	"description": "A javascript package to authenticate requests with aws signature.",
-	"scripts": {
-        "dev": "vitest",
-		"build": "tsup",
-		"ts-lint": "tsc",
-		"format": "biome format --write .",
-		"lint": "bun run ts-lint && biome lint --write .",
-		"check-format": "biome check --write .",
-		"check-exports": "attw --pack .",
-		"test": "vitest run",
-		"ci": "bun run ts-lint && bun run check-format && bun run check-exports && bun run test && bun run build"
+	"author": "Sujithkumar Sundaran <hi@iamsujith.in> (https://iamsujith.in)",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/SujithJr/aws4-request-auth-js.git"
 	},
 	"main": "dist/index.js",
+	"devDependencies": {
+		"@arethetypeswrong/cli": "^0.17.0",
+		"@biomejs/biome": "1.9.4",
+		"@changesets/cli": "^2.27.10",
+		"@types/node": "^22.9.3",
+		"typescript": "^5.7.2"
+	},
 	"exports": {
 		"./package.json": "./package.json",
 		".": {
-			"import": "./dist/index.js",
-			"default": "./dist/index.cjs"
+			"import": {
+				"types": "./dist/index.d.ts",
+				"default": "./dist/index.cs"
+			},
+			"require": {
+				"types": "./dist/index.d.cts",
+				"default": "./dist/index.cjs"
+			}
 		}
 	},
+	"bugs": {
+		"url": "https://github.com/SujithJr/aws4-request-auth-js/issues"
+	},
+	"description": "A javascript package to authenticate requests with aws4 signature.",
+	"files": ["dist"],
+	"homepage": "https://github.com/SujithJr/aws4-request-auth-js",
 	"keywords": ["aws", "aws signature", "aws authenticate"],
 	"license": "MIT",
-	"homepage": "https://github.com/SujithJr/aws-request-auth-js",
-	"bugs": {
-		"url": "https://github.com/SujithJr/aws-request-auth-js/issues"
-	},
-	"author": "Sujithkumar Sundaran <hi@iamsujith.in> (https://totaltypescript.com)",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/SujithJr/aws-request-auth-js.git"
-	},
-	"files": ["dist"],
 	"type": "module",
-	"devDependencies": {
-		"@biomejs/biome": "1.9.4",
-		"typescript": "^5.7.2",
-		"vitest": "^2.1.5"
-	},
-	"dependencies": {
-		"@arethetypeswrong/cli": "^0.17.0",
-		"tsup": "^8.3.5"
+	"scripts": {
+		"build": "rm -rf dist && bun run type-lint && bun run check-format && tsup",
+		"format": "biome format --write .",
+		"type-lint": "tsc",
+		"lint": "bun run type-lint && biome lint --write .",
+		"check-format": "biome check --write .",
+		"check-exports": "attw --pack .",
+		"ci": "rm -rf dist && bun run type-lint && bun run build && bun run check-format && bun run check-exports"
 	}
 }
