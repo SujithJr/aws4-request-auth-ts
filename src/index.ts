@@ -1,5 +1,5 @@
 import crypto from 'node:crypto'
-import { displayErrors, getFromUrl } from './utils'
+import { displayErrors, getFromUrl, log } from './utils'
 import { validateArguments } from './validation'
 
 export type HTTPMethod = 'GET' | 'HEAD' | 'PATCH' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE'
@@ -72,7 +72,7 @@ export const signHeaders = (params: SignatureParameters) => {
 	const signature = crypto.createHmac('sha256', signingKey).update(stringToSign).digest('hex')
 
 	const authHeader = `${algorithm} Credential=${accessKey}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`
-	console.log('%c \n✅ Headers signed successfully! \n', 'background: darkgreen; color: white')
+	log.success('Headers signed successfully!')
 
 	return {
 		host,

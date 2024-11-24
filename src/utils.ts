@@ -15,3 +15,8 @@ export const getFromUrl = (url: string, field?: keyof URL) => {
 
 	return urlInstance[field] as string
 }
+
+export const log = {
+	success: (text: string) => console.log(`%c \n✅ ${text}\n`, 'background: darkgreen; color: white'),
+	error: (text: string) => console.log(`%c \n❌ ${text}\n`, 'background: darkred; color: white'),
+}
