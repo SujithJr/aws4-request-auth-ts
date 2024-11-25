@@ -5,16 +5,11 @@ import { validateArguments } from './validation'
 export type HTTPMethod = 'GET' | 'HEAD' | 'PATCH' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE'
 
 export interface SignatureParameters {
-	/** Specify the endpoint URL for the request to be hit
-	 * @example "https://jsonplaceholder.com/todos"
-	 */
-	targetUrl: string
-	awsConfig: AwsConfig
-	signatureConfig?: SignatureConfig
-	/** Any of the HTTP methods */
-	method?: Lowercase<HTTPMethod> | HTTPMethod
-	/** Add request body as a string */
-	body?: string
+	targetUrl: string;
+	awsConfig: AwsConfig;
+	signatureConfig?: SignatureConfig;
+	method?: Lowercase<HTTPMethod> | HTTPMethod;
+	body?: string;
 }
 
 export interface AwsConfig {
@@ -48,7 +43,7 @@ export const signHeaders = (params: SignatureParameters) => {
 	const accessKey = params.awsConfig.accessKey
 	const secretKey = params.awsConfig.secretKey
 
-	const httpMethod = params.method || 'GET'
+	const httpMethod = params?.method || 'GET'
 	const host = getFromUrl(params.targetUrl, 'hostname')
 	const canonicalURI = getFromUrl(params.targetUrl, 'pathname')
 

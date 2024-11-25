@@ -1,5 +1,9 @@
-import type { SignatureParameters } from '.'
+import type { HTTPMethod, SignatureParameters } from '.'
 import { isEmpty } from './utils'
+
+type UpdateMethodsType = Extract<HTTPMethod, 'POST' | 'PATCH' | 'PUT'>
+
+const updateMethods: UpdateMethodsType[] = ['POST', 'PATCH', 'PUT']
 
 export const validateArguments = (params: SignatureParameters) => {
 	const result = { isInvalid: false, errors: [] as Error[] }
@@ -26,6 +30,11 @@ export const validateArguments = (params: SignatureParameters) => {
 	if (isEmpty(params.awsConfig.service)) {
 		result.isInvalid = true
 		result.errors.push(Error('"service" field is empty or null in the "awsConfig.service" object'))
+	}
+
+	if (updateMethods.includes(params.method as UpdateMethodsType) && params?.body && typeof params?.body !== 'string') {
+		result.isInvalid = true
+		result.errors.push(Error(`"body" field should be of type string. "${typeof params?.body}" given.`))
 	}
 
 	return result
