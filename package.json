@@ -27,6 +27,9 @@
 			}
 		}
 	},
+    "publishConfig": {
+        "access": "public"
+    },
 	"bugs": {
 		"url": "https://github.com/SujithJr/aws4-request-auth-ts/issues"
 	},
