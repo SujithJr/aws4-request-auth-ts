@@ -1,5 +1,11 @@
 # @sujith/aws4-request-auth-ts
 
+## 1.0.1
+
+### Patch Changes
+
+- 29b3dff: Update package json
+
 ## 1.0.0
 
 ### Major Changes

@@ -1,6 +1,6 @@
 {
 	"name": "@sujith/aws4-request-auth-ts",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"author": "Sujithkumar Sundaran <hi@iamsujith.in> (https://iamsujith.in)",
 	"repository": {
 		"type": "git",
@@ -27,9 +27,9 @@
 			}
 		}
 	},
-    "publishConfig": {
-        "access": "public"
-    },
+	"publishConfig": {
+		"access": "public"
+	},
 	"bugs": {
 		"url": "https://github.com/SujithJr/aws4-request-auth-ts/issues"
 	},
