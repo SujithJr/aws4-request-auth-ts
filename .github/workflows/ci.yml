@@ -22,4 +22,4 @@ jobs:
         run: bun install
 
       - name: Run CI
-        run: npm run ci
+        run: bun run ci
