@@ -32,7 +32,11 @@ export const validateArguments = (params: SignatureParameters) => {
 		result.errors.push(Error('"service" field is empty or null in the "awsConfig.service" object'))
 	}
 
-	if (updateMethods.includes(params.method as UpdateMethodsType) && params?.body && typeof params?.body !== 'string') {
+	if (
+		updateMethods.includes(params.method as UpdateMethodsType) &&
+		params?.body &&
+		typeof params?.body !== 'string'
+	) {
 		result.isInvalid = true
 		result.errors.push(Error(`"body" field should be of type string. "${typeof params?.body}" given.`))
 	}

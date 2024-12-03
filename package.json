@@ -1,10 +1,10 @@
 {
-	"name": "@sujith/aws4-request-auth-js",
+	"name": "@sujith/aws4-request-auth-ts",
 	"version": "0.0.1",
 	"author": "Sujithkumar Sundaran <hi@iamsujith.in> (https://iamsujith.in)",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/SujithJr/aws4-request-auth-js.git"
+		"url": "git+https://github.com/SujithJr/aws4-request-auth-ts.git"
 	},
 	"main": "dist/index.js",
 	"devDependencies": {
@@ -28,21 +28,29 @@
 		}
 	},
 	"bugs": {
-		"url": "https://github.com/SujithJr/aws4-request-auth-js/issues"
+		"url": "https://github.com/SujithJr/aws4-request-auth-ts/issues"
 	},
-	"description": "A javascript package to authenticate requests with aws4 signature.",
+	"description": "A javascript/typescript package to authenticate requests with aws4 signature.",
 	"files": ["dist"],
-	"homepage": "https://github.com/SujithJr/aws4-request-auth-js",
-	"keywords": ["aws", "aws signature", "aws authenticate"],
+	"homepage": "https://github.com/SujithJr/aws4-request-auth-ts",
+	"keywords": [
+		"aws",
+		"aws signature",
+		"aws authenticate",
+		"aws4",
+		"aws4 signature"
+	],
 	"license": "MIT",
 	"type": "module",
 	"scripts": {
-        "type-lint": "tsc",
+		"type-lint": "tsc",
 		"check-exports": "attw --pack .",
+		"prepublish-only": "npm run ci",
 		"format": "biome format --write .",
 		"check-format": "biome check --write .",
 		"lint": "bun run type-lint && biome lint --write .",
-		"build": "rm -rf dist && bun run type-lint && bun run check-format && tsup",
-		"ci": "rm -rf dist && bun run type-lint && bun run build && bun run check-format && bun run check-exports"
+		"local-release": "changeset version && changeset publish",
+		"build": "rm -rf dist && bun run type-lint && bun run check-format && tsup --minify",
+		"ci": "bun run build && bun run check-format && bun run check-exports"
 	}
 }

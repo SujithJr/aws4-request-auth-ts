@@ -5,11 +5,11 @@ import { validateArguments } from './validation'
 export type HTTPMethod = 'GET' | 'HEAD' | 'PATCH' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE'
 
 export interface SignatureParameters {
-	targetUrl: string;
-	awsConfig: AwsConfig;
-	signatureConfig?: SignatureConfig;
-	method?: Lowercase<HTTPMethod> | HTTPMethod;
-	body?: string;
+	targetUrl: string
+	awsConfig: AwsConfig
+	signatureConfig?: SignatureConfig
+	method?: Lowercase<HTTPMethod> | HTTPMethod
+	body?: string
 }
 
 export interface AwsConfig {
