@@ -1,6 +1,6 @@
 {
-	"name": "@sujith/aws4-request-auth-ts",
-	"version": "1.0.1",
+	"name": "@sujithjr/aws4-request-auth-ts",
+	"version": "1.0.0",
 	"author": "Sujithkumar Sundaran <hi@iamsujith.in> (https://iamsujith.in)",
 	"repository": {
 		"type": "git",
@@ -34,9 +34,7 @@
 		"url": "https://github.com/SujithJr/aws4-request-auth-ts/issues"
 	},
 	"description": "A javascript/typescript package to authenticate requests with aws4 signature.",
-	"files": [
-		"dist"
-	],
+	"files": ["dist"],
 	"homepage": "https://github.com/SujithJr/aws4-request-auth-ts",
 	"keywords": [
 		"aws",
