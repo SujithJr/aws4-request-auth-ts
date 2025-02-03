@@ -38,16 +38,12 @@ export const signHeaders = (params: SignatureParameters) => {
 	const { isInvalid, errors } = validateArguments(params)
 	if (isInvalid) return displayErrors(errors)
 
-	const region = params.awsConfig.region
-	const service = params.awsConfig.service
-	const accessKey = params.awsConfig.accessKey
-	const secretKey = params.awsConfig.secretKey
-
-	const httpMethod = params?.method || 'GET'
+    const httpMethod = params?.method || 'GET'
 	const host = getFromUrl(params.targetUrl, 'hostname')
 	const canonicalURI = getFromUrl(params.targetUrl, 'pathname')
+    const queryStringParams = getFromUrl(params.targetUrl, 'search').split('?')?.at(1)
 
-	const canonicalQuerystring = ''
+	const canonicalQuerystring = queryStringParams?.trim() || ''
 	const signedHeaders = params?.signatureConfig?.signedHeaders || 'host'
 	const emptyStringHash = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
 	const payloadHash = params.body ? crypto.createHash('sha256').update(params.body).digest('hex') : emptyStringHash
@@ -59,6 +55,7 @@ export const signHeaders = (params: SignatureParameters) => {
 	const hashCanonicalRequest = crypto.createHash('sha256').update(canonicalRequest).digest('hex')
 
 	const { amzDate, dateStamp } = getDateValues()
+    const { region, service, accessKey, secretKey } = params.awsConfig
 	const credentialScope = `${dateStamp}/${region}/${service}/${params?.signatureConfig?.credentialScope || 'aws4_request'}`
 
 	const algorithm = params?.signatureConfig?.algorithm || 'AWS4-HMAC-SHA256'

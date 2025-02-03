@@ -9,11 +9,12 @@ export const displayErrors = (errors: Error[]) => {
 	throw Error(`\n\n\x1b[31m ❌ You have ${errors.length} errors.\x1b[0m \n\n${errorString}\n`)
 }
 
-export const getFromUrl = (url: string, field?: keyof URL) => {
+export const getFromUrl = <K extends keyof URL>(url: string, field: K) => {
 	const urlInstance = new URL(url)
-	if (!field) return urlInstance
+	if (field) return urlInstance[field] || ''
 
-	return urlInstance[field] as string
+	log.error('No field provided to get from URL')
+	return '' as string
 }
 
 export const log = {
