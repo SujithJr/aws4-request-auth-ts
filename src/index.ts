@@ -1,5 +1,6 @@
 import crypto from 'node:crypto'
-import { displayErrors, getFromUrl, log } from './utils'
+
+import { displayErrors, emptyStringHash, getDateValues, getFromUrl, log } from './utils'
 import { validateArguments } from './validation'
 
 export type HTTPMethod = 'GET' | 'HEAD' | 'PATCH' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE'
@@ -45,12 +46,11 @@ export const signHeaders = (params: SignatureParameters) => {
 
 	const canonicalQuerystring = queryStringParams?.trim() || ''
 	const signedHeaders = params?.signatureConfig?.signedHeaders || 'host'
-	const emptyStringHash = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
-	const payloadHash = params.body ? crypto.createHash('sha256').update(params.body).digest('hex') : emptyStringHash
 	const canonicalHeaders = params?.signatureConfig?.canonicalHeaders
 		? `${params?.signatureConfig?.canonicalHeaders}\n`
 		: `host:${host}\n`
 
+	const payloadHash = generatePayloadHash(params.body)
 	const canonicalRequest = `${httpMethod}\n${canonicalURI}\n${canonicalQuerystring}\n${canonicalHeaders}\n${signedHeaders}\n${payloadHash}`
 	const hashCanonicalRequest = crypto.createHash('sha256').update(canonicalRequest).digest('hex')
 
@@ -71,8 +71,13 @@ export const signHeaders = (params: SignatureParameters) => {
 		'X-Amz-Content-Sha256': payloadHash,
 		'X-Amz-Date': amzDate,
 		Authorization: authHeader,
-		'Content-Type': 'application/json',
 	}
+}
+
+function generatePayloadHash(body?: string) {
+	if (!body) return emptyStringHash
+
+	return crypto.createHash('sha256').update(body).digest('hex')
 }
 
 function getSignatureKey(awsSecretKey: string, dateStamp: string, regionName: string, serviceName: string) {
@@ -82,18 +87,4 @@ function getSignatureKey(awsSecretKey: string, dateStamp: string, regionName: st
 	const kSigning = crypto.createHmac('sha256', kService).update('aws4_request').digest()
 
 	return kSigning
-}
-
-function getDateValues() {
-	const now = new Date()
-	const year = now.getUTCFullYear()
-	const month = String(now.getUTCMonth() + 1).padStart(2, '0')
-	const day = String(now.getUTCDate()).padStart(2, '0')
-	const hours = String(now.getUTCHours()).padStart(2, '0')
-	const minutes = String(now.getUTCMinutes()).padStart(2, '0')
-	const seconds = String(now.getUTCSeconds()).padStart(2, '0')
-	const amzDate = `${year}${month}${day}T${hours}${minutes}${seconds}Z`
-	const dateStamp = amzDate.slice(0, 8)
-
-	return { amzDate, dateStamp }
 }
