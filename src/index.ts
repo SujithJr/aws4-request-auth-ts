@@ -38,10 +38,10 @@ export const signHeaders = (params: SignatureParameters) => {
 	const { isInvalid, errors } = validateArguments(params)
 	if (isInvalid) return displayErrors(errors)
 
-    const httpMethod = params?.method || 'GET'
+	const httpMethod = params?.method || 'GET'
 	const host = getFromUrl(params.targetUrl, 'hostname')
 	const canonicalURI = getFromUrl(params.targetUrl, 'pathname')
-    const queryStringParams = getFromUrl(params.targetUrl, 'search').split('?')?.at(1)
+	const queryStringParams = getFromUrl(params.targetUrl, 'search').split('?')?.at(1)
 
 	const canonicalQuerystring = queryStringParams?.trim() || ''
 	const signedHeaders = params?.signatureConfig?.signedHeaders || 'host'
@@ -55,7 +55,7 @@ export const signHeaders = (params: SignatureParameters) => {
 	const hashCanonicalRequest = crypto.createHash('sha256').update(canonicalRequest).digest('hex')
 
 	const { amzDate, dateStamp } = getDateValues()
-    const { region, service, accessKey, secretKey } = params.awsConfig
+	const { region, service, accessKey, secretKey } = params.awsConfig
 	const credentialScope = `${dateStamp}/${region}/${service}/${params?.signatureConfig?.credentialScope || 'aws4_request'}`
 
 	const algorithm = params?.signatureConfig?.algorithm || 'AWS4-HMAC-SHA256'
